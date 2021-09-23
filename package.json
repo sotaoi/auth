@@ -1,5 +1,5 @@
 {
-  "name": "@sotaoi/oauth2-express",
+  "name": "@sotaoi/auth",
   "version": "6.1.1",
   "description": "-",
   "private": false,

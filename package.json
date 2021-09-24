@@ -2,7 +2,7 @@
   "name": "@sotaoi/auth",
   "version": "6.1.1",
   "description": "-",
-  "private": false,
+  "private": true,
   "main": "index.js",
   "scripts": {
     "bootstrap": "npm install",

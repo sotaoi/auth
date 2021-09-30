@@ -5,7 +5,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "bootstrap": "npm install",
+    "bootstrap": "npm install --no-audit --no-funds",
     "start": "node start.js",
     "dev": "npx nodemon start.js"
   },

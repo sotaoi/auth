@@ -7,7 +7,9 @@
   "scripts": {
     "bootstrap": "npm install --no-audit --no-funds",
     "start": "node start.js",
-    "dev": "npx nodemon start.js"
+    "dev": "npx nodemon start.js",
+    "deploy:sauth": "node ./scripts/deploy/deploy-sauth",
+    "clean:sauth": "node ./scripts/clean/clean-sauth"
   },
   "author": "-",
   "license": "ISC",

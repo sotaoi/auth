@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const oauthServerInit = require('./oauth/server.js');
 const { setPort } = require('./port');
 const DebugControl = require('./utilities/debug.js');
@@ -9,8 +10,8 @@ const startAuthServer = (port, provider, authorize) => {
   const app = express();
   const oauthServer = oauthServerInit(provider);
 
-  app.use(app.urlencoded({ extended: false }));
-  app.use(app.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
   app.use(DebugControl.log.request());
 
   app.use('/client', require('./routes/client.js')); // Client routes

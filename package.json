@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "bootstrap": "npm install --no-audit --no-funds",
+    "bootstrap:prod": "npm install --production --no-audit --no-funds",
     "start": "node start.js",
     "dev": "npx nodemon start.js",
     "deploy:sauth": "node ./scripts/deploy/deploy-sauth",
@@ -14,6 +15,7 @@
   "author": "-",
   "license": "ISC",
   "dependencies": {
+    "@sotaoi/omni": "git+https://github.com/sotaoi/omni#0.9.1",
     "basic-auth": "1.1.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.19.0",

@@ -10,6 +10,7 @@
     "start": "node start.js",
     "dev": "npx nodemon start.js",
     "deploy:sauth": "node ./scripts/deploy/deploy-sauth",
+    "clean:bootstrap": "node ./scripts/clean/clean-bootstrap",
     "clean:sauth": "node ./scripts/clean/clean-sauth"
   },
   "author": "-",

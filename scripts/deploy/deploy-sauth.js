@@ -54,7 +54,7 @@ const main = async () => {
     },
   );
 
-  execSync('npm run clean:sauth');
+  execSync('npm run clean:sauth', { stdio: 'inherit' });
 };
 
 main();

@@ -3,8 +3,9 @@ const bodyParser = require('body-parser');
 const oauthServerInit = require('./oauth/server.js');
 const { setPort } = require('./port');
 const DebugControl = require('./utilities/debug.js');
+const fs = require('fs');
 
-const startAuthServer = (port, provider, authorize) => {
+const startAuthServer = (tls, port, provider, authorize) => {
   setPort(port);
 
   const app = express();
@@ -32,9 +33,9 @@ const startAuthServer = (port, provider, authorize) => {
 
   const httpsServer = https.createServer(
     {
-      key: SSL_KEY,
-      cert: SSL_CERT,
-      ca: SSL_CA,
+      key: fs.readFileSync(tls.SSL_KEY),
+      cert: fs.readFileSync(tls.SSL_CERT),
+      ca: fs.readFileSync(tls.SSL_CA),
       rejectUnauthorized: false,
     },
     app,
@@ -43,6 +44,8 @@ const startAuthServer = (port, provider, authorize) => {
   httpsServer.listen(port, () => {
     console.info(`Oauth Server listening on port ${port}`);
   });
+
+  return httpsServer;
 };
 
 module.exports = {

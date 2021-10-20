@@ -47,15 +47,15 @@ const main = async () => {
   fs.renameSync(path.resolve('./tmp.deployment/.git'), path.resolve('./deployment/.git'));
   fs.rmdirSync(path.resolve('./tmp.deployment'), { recursive: true });
   execSync(
-    `git add all && git commit m "release ${packageJson.version}" && git push f u origin ${packageJson.version}`,
+    `git add --all && git commit m "release ${packageJson.version}" && git push f u origin ${packageJson.version}`,
     {
       cwd: path.resolve('./deployment'),
       stdio: 'inherit',
     },
   );
   fs.rmdirSync(path.resolve('./deployment/.git'), { recursive: true });
-  +execSync('git add all', { stdio: 'inherit' });
-  +execSync(`git commit m "deploy: >> ${packageJson.version} <<"`, { stdio: 'inherit' });
+  +execSync('git add --all', { stdio: 'inherit' });
+  +execSync(`git commit -m "deploy: >> ${packageJson.version} <<"`, { stdio: 'inherit' });
   +execSync('git push', { stdio: 'inherit' });
 };
 

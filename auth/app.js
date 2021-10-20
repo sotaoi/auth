@@ -4,6 +4,7 @@ const oauthServerInit = require('./oauth/server.js');
 const { setPort } = require('./port');
 const DebugControl = require('./utilities/debug.js');
 const fs = require('fs');
+const https = require('https');
 
 const startAuthServer = (tls, port, provider, authorize) => {
   setPort(port);

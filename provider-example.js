@@ -1,24 +1,24 @@
-const crypto = require("crypto");
+const crypto = require('crypto');
 
 module.exports = (port) => {
   const db = {
     // Here is a fast overview of what your db model should look like
     authorizationCode: {
-      authorizationCode: "", // A string that contains the code
+      authorizationCode: '', // A string that contains the code
       expiresAt: new Date(), // A date when the code expires
-      redirectUri: "", // A string of where to redirect to with this code
+      redirectUri: '', // A string of where to redirect to with this code
       client: null, // See the client section
       user: null, // Whatever you want... This is where you can be flexible with the protocol
     },
     client: {
       // Application wanting to authenticate with this server
-      clientId: "", // Unique string representing the client
-      clientSecret: "", // Secret of the client; Can be null
+      clientId: '', // Unique string representing the client
+      clientSecret: '', // Secret of the client; Can be null
       grants: [], // Array of grants that the client can use (ie, `authorization_code`)
       redirectUris: [], // Array of urls the client is allowed to redirect to
     },
     token: {
-      accessToken: "", // Access token that the server created
+      accessToken: '', // Access token that the server created
       accessTokenExpiresAt: new Date(), // Date the token expires
       client: null, // Client associated with this token
       user: null, // User associated with this token
@@ -29,18 +29,18 @@ module.exports = (port) => {
     getClient: function (clientId, clientSecret) {
       // query db for details with client
       log({
-        title: "Get Client",
+        title: 'Get Client',
         parameters: [
-          { name: "clientId", value: clientId },
-          { name: "clientSecret", value: clientSecret },
+          { name: 'clientId', value: clientId },
+          { name: 'clientSecret', value: clientSecret },
         ],
       });
       db.client = {
         // Retrieved from the database
         clientId: clientId,
         clientSecret: clientSecret,
-        grants: ["authorization_code", "refresh_token"],
-        redirectUris: ["https://localhost/no/redirect"],
+        grants: ['authorization_code', 'refresh_token'],
+        redirectUris: ['https://localhost/no/redirect'],
       };
       return new Promise((resolve) => {
         resolve(db.client);
@@ -59,11 +59,11 @@ module.exports = (port) => {
     saveToken: (token, client, user) => {
       /* This is where you insert the token into the database */
       log({
-        title: "Save Token",
+        title: 'Save Token',
         parameters: [
-          { name: "token", value: token },
-          { name: "client", value: client },
-          { name: "user", value: user },
+          { name: 'token', value: token },
+          { name: 'client', value: client },
+          { name: 'user', value: user },
         ],
       });
       db.token = {
@@ -79,51 +79,51 @@ module.exports = (port) => {
     getAccessToken: (token) => {
       /* This is where you select the token from the database where the code matches */
       log({
-        title: "Get Access Token",
-        parameters: [{ name: "token", value: token }],
+        title: 'Get Access Token',
+        parameters: [{ name: 'token', value: token }],
       });
-      if (!token || token === "undefined") return false;
+      if (!token || token === 'undefined') return false;
       return new Promise((resolve) => resolve(db.token));
     },
     getRefreshToken: (token) => {
       /* Retrieves the token from the database */
       log({
-        title: "Get Refresh Token",
-        parameters: [{ name: "token", value: token }],
+        title: 'Get Refresh Token',
+        parameters: [{ name: 'token', value: token }],
       });
-      console.log({ name: "db.token", value: db.token });
+      console.info({ name: 'db.token', value: db.token });
       return new Promise((resolve) => resolve(db.token));
     },
     revokeToken: (token) => {
       /* Delete the token from the database */
       log({
-        title: "Revoke Token",
-        parameters: [{ name: "token", value: token }],
+        title: 'Revoke Token',
+        parameters: [{ name: 'token', value: token }],
       });
-      if (!token || token === "undefined") return false;
+      if (!token || token === 'undefined') return false;
       return new Promise((resolve) => resolve(true));
     },
     generateAuthorizationCode: (client, user, scope) => {
       log({
-        title: "Generate Authorization Code",
+        title: 'Generate Authorization Code',
         parameters: [
-          { name: "client", value: client },
-          { name: "user", value: user },
+          { name: 'client', value: client },
+          { name: 'user', value: user },
         ],
       });
 
       const seed = crypto.randomBytes(256);
-      const code = crypto.createHash("sha1").update(seed).digest("hex");
+      const code = crypto.createHash('sha1').update(seed).digest('hex');
       return code;
     },
     saveAuthorizationCode: (code, client, user) => {
       /* This is where you store the access code data into the database */
       log({
-        title: "Save Authorization Code",
+        title: 'Save Authorization Code',
         parameters: [
-          { name: "code", value: code },
-          { name: "client", value: client },
-          { name: "user", value: user },
+          { name: 'code', value: code },
+          { name: 'client', value: client },
+          { name: 'user', value: user },
         ],
       });
       db.authorizationCode = {
@@ -138,16 +138,16 @@ module.exports = (port) => {
             {
               redirectUri: `${code.redirectUri}`,
             },
-            db.authorizationCode
-          )
-        )
+            db.authorizationCode,
+          ),
+        ),
       );
     },
     getAuthorizationCode: (authorizationCode) => {
       /* this is where we fetch the stored data from the code */
       log({
-        title: "Get Authorization code",
-        parameters: [{ name: "authorizationCode", value: authorizationCode }],
+        title: 'Get Authorization code',
+        parameters: [{ name: 'authorizationCode', value: authorizationCode }],
       });
       return new Promise((resolve) => {
         resolve(db.authorizationCode);
@@ -156,14 +156,14 @@ module.exports = (port) => {
     revokeAuthorizationCode: (authorizationCode) => {
       /* This is where we delete codes */
       log({
-        title: "Revoke Authorization Code",
-        parameters: [{ name: "authorizationCode", value: authorizationCode }],
+        title: 'Revoke Authorization Code',
+        parameters: [{ name: 'authorizationCode', value: authorizationCode }],
       });
       db.authorizationCode = {
         // DB Delete in this in memory example :)
-        authorizationCode: "", // A string that contains the code
+        authorizationCode: '', // A string that contains the code
         expiresAt: new Date(), // A date when the code expires
-        redirectUri: "", // A string of where to redirect to with this code
+        redirectUri: '', // A string of where to redirect to with this code
         client: null, // See the client section
         user: null, // Whatever you want... This is where you can be flexible with the protocol
       };
@@ -173,10 +173,10 @@ module.exports = (port) => {
     verifyScope: (token, scope) => {
       /* This is where we check to make sure the client has access to this scope */
       log({
-        title: "Verify Scope",
+        title: 'Verify Scope',
         parameters: [
-          { name: "token", value: token },
-          { name: "scope", value: scope },
+          { name: 'token', value: token },
+          { name: 'scope', value: scope },
         ],
       });
       const userHasAccess = true; // return true if this user / client combo has access to this resource
@@ -186,5 +186,5 @@ module.exports = (port) => {
 };
 
 function log({ title, parameters }) {
-  console.log(title, ":", parameters);
+  console.info(title, ':', parameters);
 }

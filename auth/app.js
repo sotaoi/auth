@@ -30,8 +30,19 @@ const startAuthServer = (port, provider, authorize) => {
   ); // routes to access the protected stuff
   app.use('/', (req, res) => res.redirect('/client'));
 
-  app.listen(port);
-  console.log(`Oauth Server listening on port ${port}`);
+  const httpsServer = https.createServer(
+    {
+      key: SSL_KEY,
+      cert: SSL_CERT,
+      ca: SSL_CA,
+      rejectUnauthorized: false,
+    },
+    app,
+  );
+
+  httpsServer.listen(port, () => {
+    console.info(`Oauth Server listening on port ${port}`);
+  });
 };
 
 module.exports = {

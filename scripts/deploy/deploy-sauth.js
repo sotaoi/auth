@@ -3,7 +3,22 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const { Helper } = require('@sotaoi/omni/helper');
+
+copyRecursiveSync = (src, dest, exclude = []) => {
+  if (exclude.indexOf(path.resolve(src)) !== -1) {
+    return;
+  }
+  const stats = fs.existsSync(src) ? fs.statSync(src) : false;
+  const isDirectory = !!stats && stats.isDirectory();
+  if (isDirectory) {
+    fs.mkdirSync(dest, { recursive: true });
+    fs.readdirSync(src).forEach((childItemName) => {
+      copyRecursiveSync(path.join(src, childItemName), path.join(dest, childItemName), exclude);
+    });
+  } else {
+    fs.copyFileSync(src, dest);
+  }
+};
 
 const main = async () => {
   fs.rmdirSync(path.resolve('./deployment'), { recursive: true });
@@ -14,12 +29,12 @@ const main = async () => {
   const packageJson = JSON.parse(fs.readFileSync(path.resolve('./package.json')).toString());
 
   fs.mkdirSync(path.resolve('./tmp.deployment'));
-  execSync(`git clone git@github.com:sotaoi/auth . && git checkout b ${packageJson.version}`, {
+  execSync(`git clone git@github.com:sotaoi/auth . && git checkout -b ${packageJson.version}`, {
     cwd: path.resolve('./tmp.deployment'),
     stdio: 'inherit',
   });
 
-  Helper.copyRecursiveSync(fs, path, path.resolve('./'), path.resolve('./deployment'), [
+  copyRecursiveSync(path.resolve('./'), path.resolve('./deployment'), [
     path.resolve('.git'),
     path.resolve('./deployment'),
     path.resolve('./certs'),

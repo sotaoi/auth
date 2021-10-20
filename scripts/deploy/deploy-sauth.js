@@ -53,10 +53,8 @@ const main = async () => {
       stdio: 'inherit',
     },
   );
-  fs.rmdirSync(path.resolve('./deployment/.git'), { recursive: true });
-  +execSync('git add --all', { stdio: 'inherit' });
-  +execSync(`git commit -m "deploy: >> ${packageJson.version} <<"`, { stdio: 'inherit' });
-  +execSync('git push', { stdio: 'inherit' });
+
+  execSync('npm run clean:sauth');
 };
 
 main();

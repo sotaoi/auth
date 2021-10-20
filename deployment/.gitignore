@@ -4,5 +4,4 @@ oldREADME.md
 
 /deployment/*
 !/deployment/.gitignore
-/deployment/.git
 /tmp.deployment

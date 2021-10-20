@@ -4,7 +4,6 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const { Helper } = require('@sotaoi/omni/helper');
-const { execSync } = require('child_process');
 
 const main = async () => {
   fs.rmdirSync(path.resolve('./deployment'), { recursive: true });

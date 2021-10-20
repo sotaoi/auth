@@ -30,7 +30,10 @@ const startAuthServer = (tls, port, provider, authorize) => {
       res.send({ success: true });
     },
   ); // routes to access the protected stuff
-  app.use('/', (req, res) => res.redirect('/client'));
+  app.use('/', (req, res) => {
+    // res.redirect('/client');
+    res.send({ wants: 'Redirect /client' });
+  });
 
   const httpsServer = https.createServer(
     {

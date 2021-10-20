@@ -16,7 +16,6 @@
   "author": "-",
   "license": "ISC",
   "dependencies": {
-    "@sotaoi/omni": "git+https://github.com/sotaoi/omni#0.9.1",
     "basic-auth": "1.1.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.19.0",

@@ -46,13 +46,18 @@ const main = async () => {
 
   fs.renameSync(path.resolve('./tmp.deployment/.git'), path.resolve('./deployment/.git'));
   fs.rmdirSync(path.resolve('./tmp.deployment'), { recursive: true });
-  execSync(
-    `git add --all && git commit -m "release ${packageJson.version}" && git push -f -u origin ${packageJson.version}`,
-    {
-      cwd: path.resolve('./deployment'),
-      stdio: 'inherit',
-    },
-  );
+  try {
+    execSync(
+      `git add --all && git commit -m "release ${packageJson.version}" && git push -f -u origin ${packageJson.version}`,
+      {
+        cwd: path.resolve('./deployment'),
+        stdio: 'inherit',
+      },
+    );
+  } catch (err) {
+    // do nothing
+    false && console.error(err);
+  }
 
   execSync('npm run clean:sauth', { stdio: 'inherit' });
 };

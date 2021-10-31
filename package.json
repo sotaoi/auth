@@ -5,8 +5,8 @@
   "private": false,
   "main": "index.js",
   "scripts": {
-    "bootstrap": "npm install --force --legacy-peer-deps --no-audit --no-funds",
-    "bootstrap:prod": "npm install --production --force --legacy-peer-deps --no-audit --no-funds",
+    "bootstrap": "npm install --force --no-audit --no-funds",
+    "bootstrap:prod": "npm install --production --force --no-audit --no-funds",
     "start": "node start.js",
     "dev": "npx nodemon start.js",
     "deploy:sauth": "node ./scripts/deploy/deploy-sauth",
